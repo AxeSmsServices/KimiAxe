@@ -1,6 +1,7 @@
 /**
  * KimiAxe — Express Server
  * Serves static HTML files and provides API endpoints
+ * Routes are split per platform: axesms, axesocials, axexvx, axeb2bai, axeb2bwallet
  */
 
 require('dotenv').config();
@@ -10,6 +11,13 @@ const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const path = require('path');
 const db = require('./db');
+
+// ---- PLATFORM ROUTES ----
+const axeSMSRoutes = require('./routes/axesms');
+const axeSocialsRoutes = require('./routes/axesocials');
+const axeXVXRoutes = require('./routes/axexvx');
+const axeB2BAIRoutes = require('./routes/axeb2bai');
+const axeB2BWalletRoutes = require('./routes/axeb2bwallet');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -41,6 +49,13 @@ app.use(express.static(path.join(__dirname, '..')));
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString(), version: '1.0.0' });
 });
+
+// ---- PLATFORM-SPECIFIC ROUTES ----
+app.use('/api/sms', axeSMSRoutes);
+app.use('/api/socials', axeSocialsRoutes);
+app.use('/api/links', axeXVXRoutes);
+app.use('/api/ai', axeB2BAIRoutes);
+app.use('/api/wallet', axeB2BWalletRoutes);
 
 // ---- AUTH ROUTES ----
 app.post('/api/auth/register', async (req, res) => {

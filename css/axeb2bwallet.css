@@ -1,0 +1,336 @@
+/* ============================================
+   AxeB2B Wallet — Platform-Specific Stylesheet
+   Extends: css/style.css (global)
+   ============================================ */
+
+/* ---- AXEB2B WALLET BRAND COLORS ---- */
+:root {
+  --wallet-accent: #f97316;    /* Orange */
+  --wallet-accent2: #ea580c;
+  --wallet-glow: rgba(249,115,22,0.15);
+  --wallet-badge-bg: rgba(249,115,22,0.1);
+  --wallet-badge-border: rgba(249,115,22,0.3);
+}
+
+/* ---- HERO ACCENT ---- */
+.platform-hero .hero-badge {
+  background: var(--wallet-badge-bg);
+  border-color: var(--wallet-badge-border);
+  color: var(--wallet-accent);
+}
+
+.platform-hero .badge-dot {
+  background: var(--wallet-accent);
+  box-shadow: 0 0 8px var(--wallet-accent);
+}
+
+/* ---- WALLET CARD ---- */
+.wallet-card {
+  background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+  border: 1px solid var(--border2);
+  border-radius: 16px;
+  padding: 28px;
+  max-width: 360px;
+  position: relative;
+  overflow: hidden;
+}
+
+.wallet-card::before {
+  content: '';
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 160px;
+  height: 160px;
+  background: var(--wallet-glow);
+  border-radius: 50%;
+  filter: blur(40px);
+}
+
+.wallet-card-label {
+  font-size: 0.72rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.wallet-balance {
+  font-family: 'Geist Mono', monospace;
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.wallet-balance .currency {
+  font-size: 1.2rem;
+  color: var(--muted);
+  margin-right: 4px;
+}
+
+.wallet-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+
+.wallet-card-id {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--muted);
+  letter-spacing: 2px;
+}
+
+.wallet-card-logo {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--wallet-accent);
+  font-family: 'Geist Mono', monospace;
+}
+
+/* ---- QUICK ACTIONS ---- */
+.wallet-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.wallet-action-btn {
+  flex: 1;
+  min-width: 100px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 12px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s, transform 0.2s;
+  text-decoration: none;
+  color: var(--text);
+}
+
+.wallet-action-btn:hover {
+  border-color: var(--wallet-accent);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px var(--wallet-glow);
+}
+
+.wallet-action-icon {
+  font-size: 1.4rem;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.wallet-action-label {
+  font-size: 0.75rem;
+  color: var(--muted2);
+}
+
+/* ---- TRANSACTION LIST ---- */
+.txn-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.txn-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.txn-item:last-child {
+  border-bottom: none;
+}
+
+.txn-icon {
+  width: 40px;
+  height: 40px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.txn-info {
+  flex: 1;
+}
+
+.txn-info h4 {
+  font-size: 0.88rem;
+  font-weight: 500;
+}
+
+.txn-info p {
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.txn-amount {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.txn-amount.credit {
+  color: #22c55e;
+}
+
+.txn-amount.debit {
+  color: #ef4444;
+}
+
+/* ---- PAYMENT METHODS ---- */
+.payment-methods {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+.payment-method {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.payment-method:hover,
+.payment-method.active {
+  border-color: var(--wallet-accent);
+  background: var(--wallet-badge-bg);
+}
+
+.payment-method .pm-icon {
+  font-size: 1.6rem;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.payment-method .pm-name {
+  font-size: 0.78rem;
+  color: var(--muted2);
+}
+
+/* ---- SERVICES GRID (eSIM, Domain, etc.) ---- */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.service-card {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px 20px;
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.service-card:hover {
+  border-color: var(--wallet-accent);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 32px var(--wallet-glow);
+}
+
+.service-icon {
+  font-size: 2rem;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.service-card h3 {
+  font-size: 0.92rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.service-card p {
+  font-size: 0.78rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.service-price {
+  margin-top: 12px;
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.85rem;
+  color: var(--wallet-accent);
+  font-weight: 600;
+}
+
+/* ---- WALLET BUTTON ---- */
+.btn-wallet {
+  background: var(--wallet-accent);
+  color: #fff;
+  padding: 12px 28px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.15s;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.btn-wallet:hover {
+  background: var(--wallet-accent2);
+  transform: translateY(-1px);
+}
+
+/* ---- BALANCE CHART ---- */
+.balance-chart {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.balance-chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.balance-chart-header h4 {
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.chart-period {
+  display: flex;
+  gap: 4px;
+}
+
+.period-btn {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--muted);
+  padding: 4px 10px;
+  font-size: 0.72rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.period-btn.active,
+.period-btn:hover {
+  border-color: var(--wallet-accent);
+  color: var(--wallet-accent);
+  background: var(--wallet-badge-bg);
+}
