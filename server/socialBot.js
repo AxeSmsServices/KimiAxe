@@ -1,65 +1,82 @@
-// server/socialBot.js
+'use strict';
 
-const { Client } = require('discord.js'); // Example for Discord
-const { TwitterApi } = require('twitter-api-v2'); // Example for Twitter
-const mongoose = require('mongoose'); // MongoDB for logging
+const db = require('./db');
 
-// Initialize Clients for different platforms
-const discordClient = new Client();
-const twitterClient = new TwitterApi('{YOUR_TWITTER_BEARER_TOKEN}');
+async function logPublish(channel, status, messageBody, payload = {}, errorMessage = null) {
+  await db.query(
+    `INSERT INTO update_publish_logs (channel, post_type, message_body, payload, status, error_message)
+     VALUES ($1, $2, $3, $4, $5, $6)`,
+    [channel, 'daily-digest', messageBody, JSON.stringify(payload), status, errorMessage]
+  );
+}
 
-// Logging Schema for MongoDB
-const logSchema = new mongoose.Schema({
-    command: String,
-    platform: String,
-    timestamp: { type: Date, default: Date.now },
-    status: String,
-});
+async function publishToDiscord(message) {
+  const webhook = process.env.DISCORD_WEBHOOK_URL;
+  if (!webhook) {
+    return { ok: false, skipped: true, reason: 'DISCORD_WEBHOOK_URL not set' };
+  }
 
-const Log = mongoose.model('Log', logSchema);
+  try {
+    const res = await fetch(webhook, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ content: message }),
+    });
 
-// Connect to MongoDB
-mongoose.connect('{YOUR_MONGODB_CONNECTION_STRING}', { useNewUrlParser: true, useUnifiedTopology: true });
-
-// Scheduled Posting Function
-const schedulePost = (platform, message, time) => {
-    // Implementation for scheduling a post on the specified platform
-};
-
-// Cross-Post Function
-const crossPost = async (message) => {
-    try {
-        await discordClient.channels.cache.get('{CHANNEL_ID}').send(message); // Discord
-        await twitterClient.v1.tweet(message); // Twitter
-        await logPost('cross-post', 'Success');
-    } catch (error) {
-        console.error(error);
-        await logPost('cross-post', 'Failed');
+    if (!res.ok) {
+      const body = await res.text();
+      throw new Error(`Discord publish failed: ${res.status} ${body}`);
     }
-};
+    return { ok: true };
+  } catch (err) {
+    return { ok: false, error: err.message };
+  }
+}
 
-// Admin Commands
-const handleAdminCommand = (command) => {
-    switch (command) {
-        case 'status':
-            // Code to check status
-            break;
-        // Add more commands as required
+async function publishToTwitter(message) {
+  const endpoint = process.env.TWITTER_PUBLISH_WEBHOOK;
+  if (!endpoint) {
+    return { ok: false, skipped: true, reason: 'TWITTER_PUBLISH_WEBHOOK not set' };
+  }
+
+  try {
+    const res = await fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: message }),
+    });
+
+    if (!res.ok) {
+      const body = await res.text();
+      throw new Error(`Twitter publish failed: ${res.status} ${body}`);
     }
+    return { ok: true };
+  } catch (err) {
+    return { ok: false, error: err.message };
+  }
+}
+
+async function publishUpdateDigest(message) {
+  const channels = [];
+
+  const { broadcastToPrimaryChat } = require('./tgBot');
+  const telegram = await broadcastToPrimaryChat(message);
+  channels.push({ channel: 'telegram', ...telegram });
+
+  const discord = await publishToDiscord(message);
+  channels.push({ channel: 'discord', ...discord });
+
+  const twitter = await publishToTwitter(message);
+  channels.push({ channel: 'twitter', ...twitter });
+
+  const ok = channels.some((c) => c.ok);
+  const fail = channels.filter((c) => c.error).map((c) => `${c.channel}: ${c.error}`).join(' | ');
+
+  await logPublish('social-bot', ok ? 'success' : 'failed', message, { channels }, fail || null);
+
+  return { ok, channels };
+}
+
+module.exports = {
+  publishUpdateDigest,
 };
-
-// Log Post to Database
-const logPost = async (command, status) => {
-    const logEntry = new Log({ command, platform: 'Discord, Twitter', status });
-    await logEntry.save();
-};
-
-// Event Listeners
-discordClient.on('ready', () => {
-    console.log(`Logged in as ${discordClient.user.tag}`);
-});
-
-discordClient.login('{YOUR_DISCORD_BOT_TOKEN}');
-
-// Export functions if needed for testing or other purposes
-module.exports = { crossPost, schedulePost, handleAdminCommand };
