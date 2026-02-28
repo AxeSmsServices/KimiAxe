@@ -3,7 +3,7 @@
 const TelegramBot = require('node-telegram-bot-api');
 
 // Replace with your actual token
-const token = 'YOUR_TELEGRAM_BOT_TOKEN';
+const token = '7991955321:AAEv-uBBtZEyLzU4wavjM_F9yo5mHorEci0';
 
 // Create a bot that uses 'polling' to fetch new updates
 const bot = new TelegramBot(token, {polling: true});
