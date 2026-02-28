@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AxeSMS — Bulk SMS, Email & WhatsApp | KimiAxe</title>
+<meta name="description" content="Send bulk SMS, Email, WhatsApp messages & get virtual numbers. Reach millions instantly with AxeSMS — part of the KimiAxe ecosystem.">
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;700&family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/axesms.css">
+</head>
+<body>
+
+<div class="announce">📱 AxeSMS — Part of the <a href="index.html">KimiAxe Ecosystem</a> · axesms.org</div>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="logo">kimi<span>axe</span></a>
+    <div class="nav-links">
+      <a href="index.html#platforms" class="nav-hide">All Platforms</a>
+      <a href="#features" class="nav-hide">Features</a>
+      <a href="#pricing" class="nav-hide">Pricing</a>
+      <a href="#" class="btn-outline" style="padding:6px 14px;font-size:0.8rem">Login</a>
+      <a href="#" class="btn-white" style="padding:6px 14px;font-size:0.8rem">Get Started</a>
+    </div>
+  </div>
+</nav>
+
+<section class="platform-hero">
+  <div class="hero-grid"></div>
+  <div class="hero-badge"><span class="badge-dot"></span> axesms.org · Messaging Platform</div>
+  <h1>Reach Millions<br><em>Instantly</em></h1>
+  <p>Bulk SMS, Email, WhatsApp & Virtual Numbers. The most powerful messaging platform for businesses of all sizes.</p>
+  <div class="hero-actions" style="animation:fadeUp 0.6s 0.3s ease both;opacity:0">
+    <a href="#" class="btn-white">Start Sending Free</a>
+    <a href="#features" class="btn-outline">See Features</a>
+  </div>
+</section>
+
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-item"><div class="stat-num">50M+</div><div class="stat-label">Messages Sent</div></div>
+    <div class="stat-item"><div class="stat-num">190+</div><div class="stat-label">Countries</div></div>
+    <div class="stat-item"><div class="stat-num">98%</div><div class="stat-label">Delivery Rate</div></div>
+    <div class="stat-item"><div class="stat-num">2s</div><div class="stat-label">Avg Delivery</div></div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<div id="features" class="features-section">
+  <div class="features-inner">
+    <div class="section-label">What You Get</div>
+    <div class="section-title">Everything for <em>messaging</em></div>
+    <div class="features-grid">
+      <div class="feature-item"><div class="fi-icon">📱</div><div class="fi-title">Bulk SMS</div><div class="fi-desc">Send millions of SMS messages in seconds. Supports Unicode, flash SMS, and scheduled delivery.</div></div>
+      <div class="feature-item"><div class="fi-icon">📧</div><div class="fi-title">Bulk Email</div><div class="fi-desc">SMTP relay, transactional emails, newsletters with drag-and-drop builder and templates.</div></div>
+      <div class="feature-item"><div class="fi-icon">💬</div><div class="fi-title">WhatsApp Business</div><div class="fi-desc">Official WhatsApp Business API. Send templates, media, interactive buttons at scale.</div></div>
+      <div class="feature-item"><div class="fi-icon">📞</div><div class="fi-title">Virtual Numbers</div><div class="fi-desc">Get local numbers in 50+ countries for 2FA, OTP, and inbound SMS reception.</div></div>
+      <div class="feature-item"><div class="fi-icon">🎯</div><div class="fi-title">Smart Segmentation</div><div class="fi-desc">Target the right audience with dynamic lists, filters, and behavioral triggers.</div></div>
+      <div class="feature-item"><div class="fi-icon">📊</div><div class="fi-title">Real-time Analytics</div><div class="fi-desc">Delivery reports, open rates, click tracking, and conversion analytics in real time.</div></div>
+      <div class="feature-item"><div class="fi-icon">🔄</div><div class="fi-title">Two-Way SMS</div><div class="fi-desc">Receive replies, run surveys, and automate responses with keyword triggers.</div></div>
+      <div class="feature-item"><div class="fi-icon">⚡</div><div class="fi-title">REST API</div><div class="fi-desc">Full-featured API with SDKs for PHP, Python, Node.js, Java. Webhooks included.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="flow-section">
+  <div class="section-label">How It Works</div>
+  <div class="section-title">Send in <em>3 steps</em></div>
+  <div class="flow-steps" style="grid-template-columns:repeat(3,1fr)">
+    <div class="flow-step"><div class="fs-dot">1</div><div class="fs-label">Upload Contacts</div><div class="fs-sub">Import CSV or connect your CRM</div></div>
+    <div class="flow-step"><div class="fs-dot">2</div><div class="fs-label">Compose Message</div><div class="fs-sub">Use templates or write custom content</div></div>
+    <div class="flow-step"><div class="fs-dot">3</div><div class="fs-label">Send & Track</div><div class="fs-sub">Schedule or send instantly, watch live reports</div></div>
+  </div>
+</div>
+
+<!-- CONTENT BLOCK -->
+<div style="border-top:1px solid var(--border)">
+  <div class="content-block">
+    <div class="two-col">
+      <div class="two-col-text">
+        <div class="section-label">API Integration</div>
+        <h2>Integrate in <em>minutes</em></h2>
+        <p>Our REST API is designed for developers. Send your first SMS in under 5 minutes with our comprehensive documentation and SDKs.</p>
+        <p>Supports webhooks for delivery receipts, inbound messages, and status updates in real time.</p>
+        <a href="#" class="btn-outline">View API Docs</a>
+      </div>
+      <div class="two-col-visual">
+        <div class="api-block">
+          <span class="key">POST</span> /api/v1/sms/send<br><br>
+          {<br>
+          &nbsp;&nbsp;<span class="key">"to"</span>: <span class="str">"+91XXXXXXXXXX"</span>,<br>
+          &nbsp;&nbsp;<span class="key">"message"</span>: <span class="str">"Hello from AxeSMS!"</span>,<br>
+          &nbsp;&nbsp;<span class="key">"sender_id"</span>: <span class="str">"AXESMS"</span>,<br>
+          &nbsp;&nbsp;<span class="key">"schedule"</span>: <span class="val">null</span><br>
+          }<br><br>
+          <span class="val">// Response: 200 OK</span><br>
+          {<br>
+          &nbsp;&nbsp;<span class="key">"status"</span>: <span class="str">"queued"</span>,<br>
+          &nbsp;&nbsp;<span class="key">"message_id"</span>: <span class="str">"msg_abc123"</span><br>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PRICING -->
+<div id="pricing" style="border-top:1px solid var(--border)">
+  <div class="section">
+    <div class="section-label">Pricing</div>
+    <div class="section-title">Simple, <em>transparent</em> pricing</div>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="price-badge">Starter</div>
+        <div class="price-name">Pay As You Go</div>
+        <div class="price-amount">₹0.12<span>/SMS</span></div>
+        <div class="price-desc">Perfect for small businesses and testing. No monthly fees.</div>
+        <ul class="price-features">
+          <li>SMS to 190+ countries</li>
+          <li>Email sending</li>
+          <li>Basic analytics</li>
+          <li>API access</li>
+          <li>Email support</li>
+        </ul>
+        <a href="#" class="btn-outline" style="width:100%;text-align:center">Get Started Free</a>
+      </div>
+      <div class="price-card featured">
+        <div class="price-badge">Most Popular</div>
+        <div class="price-name">Business</div>
+        <div class="price-amount">₹2,999<span>/mo</span></div>
+        <div class="price-desc">For growing businesses with high volume messaging needs.</div>
+        <ul class="price-features">
+          <li>500K SMS/month</li>
+          <li>WhatsApp Business API</li>
+          <li>Virtual numbers (5)</li>
+          <li>Advanced analytics</li>
+          <li>Priority support</li>
+          <li>White label option</li>
+        </ul>
+        <a href="#" class="btn-white" style="width:100%;text-align:center">Start Business Plan</a>
+      </div>
+      <div class="price-card">
+        <div class="price-badge">Enterprise</div>
+        <div class="price-name">Enterprise</div>
+        <div class="price-amount">Custom</div>
+        <div class="price-desc">For large enterprises with custom requirements and SLAs.</div>
+        <ul class="price-features">
+          <li>Unlimited SMS</li>
+          <li>Dedicated infrastructure</li>
+          <li>Custom sender IDs</li>
+          <li>SLA guarantee</li>
+          <li>24/7 dedicated support</li>
+          <li>Custom integrations</li>
+        </ul>
+        <a href="#" class="btn-outline" style="width:100%;text-align:center">Contact Sales</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TESTIMONIALS -->
+<div class="testimonials">
+  <div class="testimonials-inner">
+    <div class="section-label">Testimonials</div>
+    <div class="section-title">Loved by <em>marketers</em></div>
+    <div class="testimonials-grid">
+      <div class="t-card"><div class="t-stars">★★★★★</div><div class="t-text">"AxeSMS helped us send 2 million campaign messages in one click. Delivery rate is incredible — 98.5%."</div><div class="t-author"><div class="t-avatar">RK</div><div><div class="t-name">Rahul Kumar</div><div class="t-role">Marketing Director, RetailCo</div></div></div></div>
+      <div class="t-card"><div class="t-stars">★★★★★</div><div class="t-text">"The WhatsApp Business API integration was seamless. Our customer engagement went up 3x."</div><div class="t-author"><div class="t-avatar">SJ</div><div><div class="t-name">Sneha Joshi</div><div class="t-role">CTO, FinTech Startup</div></div></div></div>
+      <div class="t-card"><div class="t-stars">★★★★★</div><div class="t-text">"Virtual numbers for OTP verification saved us from carrier restrictions. Works perfectly globally."</div><div class="t-author"><div class="t-avatar">VR</div><div><div class="t-name">Vikram Rao</div><div class="t-role">Product Manager, SaaS Co</div></div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="cta-title">Start sending<br><em>smarter</em> today</div>
+  <p class="cta-sub">Join 10,000+ businesses using AxeSMS to reach their customers instantly.</p>
+  <div class="hero-actions">
+    <a href="#" class="btn-white">Create Free Account</a>
+    <a href="index.html#platforms" class="btn-outline">Explore All Platforms</a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">kimi<span>axe</span></a>
+        <p class="footer-desc">The complete business operating system. 6 powerful platforms under one roof.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Platforms</h4>
+        <a href="axesms.html">AxeSMS</a>
+        <a href="axexvx.html">AxeXVX</a>
+        <a href="axeb2bai.html">AxeB2B AI</a>
+        <a href="axeb2bwallet.html">AxeB2B Wallet</a>
+        <a href="axesocials.html">AxeSocials</a>
+      </div>
+      <div class="footer-col">
+        <h4>AxeSMS</h4>
+        <a href="#">Bulk SMS</a>
+        <a href="#">Email API</a>
+        <a href="#">WhatsApp API</a>
+        <a href="#">Virtual Numbers</a>
+        <a href="#">Pricing</a>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <a href="#" onclick="openModal('terms')">Terms & Conditions</a>
+        <a href="#" onclick="openModal('privacy')">Privacy Policy</a>
+        <a href="#" onclick="openModal('refund')">Refund Policy</a>
+        <a href="#" onclick="openModal('cookie')">Cookie Policy</a>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <a href="#">Help Center</a>
+        <a href="#">API Docs</a>
+        <a href="#">Status Page</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2025 KimiAxe / AxeSMS. All rights reserved.</div>
+      <div class="footer-links">
+        <a href="#">Twitter</a><a href="#">LinkedIn</a><a href="#">GitHub</a><a href="#">Telegram</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- LEGAL MODALS -->
+<div class="modal-overlay" id="modal-terms" onclick="closeModal('terms')">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-header"><span class="modal-title">Terms & Conditions — KimiAxe</span><button class="modal-close" onclick="closeModal('terms')">✕</button></div>
+    <div class="modal-body">
+      <h3>1. Acceptance of Terms</h3><p>By accessing or using KimiAxe services, you agree to be bound by these Terms and Conditions.</p>
+      <h3>2. Use of Services</h3><p>You agree to use these services only for lawful purposes. Spam and phishing are strictly prohibited.</p>
+      <h3>3. Payment & Billing</h3><p>All payments are processed through our secure wallet system.</p>
+      <p style="margin-top:24px;color:var(--muted);font-size:0.75rem">Last updated: January 2025</p>
+    </div>
+  </div>
+</div>
+<div class="modal-overlay" id="modal-privacy" onclick="closeModal('privacy')">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-header"><span class="modal-title">Privacy Policy — KimiAxe</span><button class="modal-close" onclick="closeModal('privacy')">✕</button></div>
+    <div class="modal-body">
+      <h3>1. Information We Collect</h3><p>We collect information you provide (name, email, phone), usage data, and payment details.</p>
+      <h3>2. Data Security</h3><p>We use industry-standard encryption and secure servers to protect your data.</p>
+      <p style="margin-top:24px;color:var(--muted);font-size:0.75rem">Last updated: January 2025</p>
+    </div>
+  </div>
+</div>
+<div class="modal-overlay" id="modal-refund" onclick="closeModal('refund')">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-header"><span class="modal-title">Refund Policy — KimiAxe</span><button class="modal-close" onclick="closeModal('refund')">✕</button></div>
+    <div class="modal-body">
+      <h3>1. Wallet Credits</h3><p>Unused wallet credits may be refunded within 7 days of purchase if no services have been consumed.</p>
+      <h3>2. Subscription Plans</h3><p>Subscription refunds are available within 24 hours of purchase if the service has not been used.</p>
+      <p style="margin-top:24px;color:var(--muted);font-size:0.75rem">Last updated: January 2025</p>
+    </div>
+  </div>
+</div>
+<div class="modal-overlay" id="modal-cookie" onclick="closeModal('cookie')">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-header"><span class="modal-title">Cookie Policy — KimiAxe</span><button class="modal-close" onclick="closeModal('cookie')">✕</button></div>
+    <div class="modal-body">
+      <h3>1. What Are Cookies</h3><p>Cookies are small text files stored on your device to help us provide a better experience.</p>
+      <h3>2. Managing Cookies</h3><p>You can control cookies through your browser settings.</p>
+      <p style="margin-top:24px;color:var(--muted);font-size:0.75rem">Last updated: January 2025</p>
+    </div>
+  </div>
+</div>
+
+<script src="js/main.js"></script>
+<script src="js/axesms.js"></script>
+</body>
+</html>

@@ -1,0 +1,207 @@
+/* ============================================
+   AxeSMS — Platform-Specific Stylesheet
+   Extends: css/style.css (global)
+   ============================================ */
+
+/* ---- AXESMS BRAND COLORS ---- */
+:root {
+  --sms-accent: #3b82f6;       /* Blue */
+  --sms-accent2: #1d4ed8;
+  --sms-glow: rgba(59,130,246,0.15);
+  --sms-badge-bg: rgba(59,130,246,0.1);
+  --sms-badge-border: rgba(59,130,246,0.3);
+}
+
+/* ---- HERO ACCENT ---- */
+.platform-hero .hero-badge {
+  background: var(--sms-badge-bg);
+  border-color: var(--sms-badge-border);
+  color: var(--sms-accent);
+}
+
+.platform-hero .badge-dot {
+  background: var(--sms-accent);
+  box-shadow: 0 0 8px var(--sms-accent);
+}
+
+/* ---- CHANNEL CARDS ---- */
+.channel-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.channel-card {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px 20px;
+  text-align: center;
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.channel-card:hover {
+  border-color: var(--sms-accent);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 32px var(--sms-glow);
+}
+
+.channel-icon {
+  font-size: 2rem;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.channel-card h3 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.channel-card p {
+  font-size: 0.8rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* ---- SMS COMPOSER PREVIEW ---- */
+.sms-composer {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.sms-composer label {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.sms-composer input,
+.sms-composer textarea,
+.sms-composer select {
+  width: 100%;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  padding: 10px 14px;
+  font-size: 0.88rem;
+  font-family: inherit;
+  margin-bottom: 16px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.sms-composer input:focus,
+.sms-composer textarea:focus,
+.sms-composer select:focus {
+  border-color: var(--sms-accent);
+}
+
+.sms-composer textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.char-count {
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-align: right;
+  margin-top: -12px;
+  margin-bottom: 16px;
+}
+
+/* ---- STATS STRIP ---- */
+.sms-stats {
+  display: flex;
+  gap: 32px;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 40px 24px;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.sms-stat {
+  text-align: center;
+}
+
+.sms-stat .num {
+  font-family: 'Geist Mono', monospace;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--sms-accent);
+}
+
+.sms-stat .label {
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+/* ---- VIRTUAL NUMBER CARD ---- */
+.vn-card {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: border-color 0.2s;
+}
+
+.vn-card:hover {
+  border-color: var(--sms-accent);
+}
+
+.vn-flag {
+  font-size: 1.8rem;
+}
+
+.vn-info h4 {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.vn-info p {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.vn-price {
+  margin-left: auto;
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.9rem;
+  color: var(--sms-accent);
+  font-weight: 600;
+}
+
+/* ---- SEND BUTTON ---- */
+.btn-sms {
+  background: var(--sms-accent);
+  color: #fff;
+  padding: 12px 28px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.15s;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.btn-sms:hover {
+  background: var(--sms-accent2);
+  transform: translateY(-1px);
+}
