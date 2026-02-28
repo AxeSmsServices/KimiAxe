@@ -1,68 +1,97 @@
 'use strict';
 
 const { Telegraf } = require('telegraf');
-const bot = new Telegraf(process.env.BOT_TOKEN);
+const db = require('./db');
+const { getDigestData, formatDigestMessage } = require('./services/updateDigest');
+const { runDailyDigest } = require('./jobs/dailyDigestJob');
 
-// Command to start the bot
-bot.start((ctx) => {
-    ctx.reply('Welcome to the Social Media Manager Bot! Use /help to see all commands.');
-});
+let botInstance = null;
 
-// Command to show help
-bot.command('help', (ctx) => {
-    ctx.reply(`Available commands:\n/tech_post - Manage tech posts\n/finance_post - Manage finance posts\n/entertainment_post - Manage entertainment posts\n/showAll - Show all posts\n/add_post {platform} {content} - Add a new post to a platform\n/remove_post {id} - Remove a post by ID\n`);
-});
+function isAdmin(ctx) {
+  const allow = (process.env.TG_ADMIN_IDS || '')
+    .split(',')
+    .map((v) => v.trim())
+    .filter(Boolean);
+  if (!allow.length) return true;
+  return allow.includes(String(ctx.from?.id || ''));
+}
 
-// Command to add a post
-bot.command('add_post', (ctx) => {
-    const { message } = ctx;
-    const args = message.text.split(' ').slice(1);
-    if (args.length < 2) {
-        return ctx.reply('Usage: /add_post {platform} {content}.');
-    }
-    const [platform, ...contentArr] = args;
-    const content = contentArr.join(' ');
-    // TODO: Add functionality to store the post
-    ctx.reply(`Post added to ${platform}: ${content}`);
-});
+async function sendDigest(ctx) {
+  const digest = await getDigestData(new Date());
+  const message = formatDigestMessage(digest);
+  await ctx.reply(message, { disable_web_page_preview: true });
+}
 
-// Command to remove a post
-bot.command('remove_post', (ctx) => {
-    const { message } = ctx;
-    const postId = message.text.split(' ')[1];
-    if (!postId) {
-        return ctx.reply('Usage: /remove_post {id}.');
-    }
-    // TODO: Add functionality to remove the post
-    ctx.reply(`Post with ID ${postId} removed.`);
-});
+async function registerCommands(bot) {
+  bot.start((ctx) => ctx.reply('KimiAxe Update Bot active. Commands: /digest /publish_now /status'));
 
-// Command to show all posts
-bot.command('showAll', (ctx) => {
-    // TODO: Retrieve and show all posts
-    ctx.reply('Showing all posts...');
-});
+  bot.command('status', async (ctx) => {
+    if (!isAdmin(ctx)) return ctx.reply('Not authorized.');
+    const today = new Date().toISOString().slice(0, 10);
+    const logs = await db.query(
+      `SELECT channel, status, published_at
+         FROM update_publish_logs
+        WHERE published_at::date = $1::date
+        ORDER BY published_at DESC
+        LIMIT 20`,
+      [today]
+    );
 
-// Command to manage platform-specific posts
-bot.command('tech_post', (ctx) => {
-    ctx.reply('Managing Tech Posts...');
-});
+    const lines = logs.rows.length
+      ? logs.rows.map((l) => `• ${l.channel} — ${l.status} — ${new Date(l.published_at).toISOString()}`).join('\n')
+      : 'No publish logs today.';
 
-bot.command('finance_post', (ctx) => {
-    ctx.reply('Managing Finance Posts...');
-});
+    return ctx.reply(`Daily publish status (${today})\n${lines}`);
+  });
 
-bot.command('entertainment_post', (ctx) => {
-    ctx.reply('Managing Entertainment Posts...');
-});
+  bot.command('digest', async (ctx) => {
+    if (!isAdmin(ctx)) return ctx.reply('Not authorized.');
+    await sendDigest(ctx);
+  });
 
-// Launch the bot
-bot.launch();
-console.log('Bot is launched and running...');
+  bot.command('publish_now', async (ctx) => {
+    if (!isAdmin(ctx)) return ctx.reply('Not authorized.');
+    const result = await runDailyDigest(true);
+    await ctx.reply(`Manual publish done. Success: ${result.publishResult?.ok ? 'yes' : 'no'}`);
+  });
+}
 
-process.on('SIGINT', () => {
-    bot.stop('SIGINT');
-});
-process.on('SIGTERM', () => {
-    bot.stop('SIGTERM');
-});
+async function broadcastToPrimaryChat(message) {
+  if (!botInstance) return { ok: false, reason: 'bot not initialized' };
+  const chatId = process.env.TG_CHAT_ID;
+  if (!chatId) return { ok: false, reason: 'TG_CHAT_ID not set' };
+
+  try {
+    await botInstance.telegram.sendMessage(chatId, message, { disable_web_page_preview: true });
+    return { ok: true };
+  } catch (err) {
+    return { ok: false, error: err.message };
+  }
+}
+
+function initTelegramBot() {
+  const token = process.env.BOT_TOKEN;
+  if (!token) {
+    console.log('ℹ️ BOT_TOKEN not set, Telegram bot disabled');
+    return null;
+  }
+
+  if (botInstance) return botInstance;
+  const bot = new Telegraf(token);
+  registerCommands(bot).catch((err) => console.error('TG register commands error:', err.message));
+  bot.launch().then(() => console.log('🤖 Telegram bot running')).catch((err) => {
+    console.error('Telegram launch error:', err.message);
+  });
+
+  process.once('SIGINT', () => bot.stop('SIGINT'));
+  process.once('SIGTERM', () => bot.stop('SIGTERM'));
+
+  botInstance = bot;
+  return bot;
+}
+
+module.exports = {
+  initTelegramBot,
+  broadcastToPrimaryChat,
+};
+

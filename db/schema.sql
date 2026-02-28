@@ -296,6 +296,65 @@ CREATE INDEX idx_scheduled_posts_user_id ON scheduled_posts(user_id);
 CREATE INDEX idx_scheduled_posts_scheduled_at ON scheduled_posts(scheduled_at);
 
 -- ============================================
+-- WEBSITE PORTFOLIO & UPDATE TRACKING
+-- ============================================
+
+CREATE TABLE IF NOT EXISTS website_registry (
+  id                UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  website_key       VARCHAR(100) UNIQUE NOT NULL,
+  website_name      VARCHAR(255) NOT NULL,
+  primary_domain    VARCHAR(255) NOT NULL,
+  subdomains        TEXT[] DEFAULT '{}',
+  category          VARCHAR(100),
+  status            VARCHAR(50) DEFAULT 'active', -- active, maintenance, paused
+  description       TEXT,
+  created_at        TIMESTAMPTZ DEFAULT NOW(),
+  updated_at        TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS website_updates (
+  id                UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  website_key       VARCHAR(100) NOT NULL,
+  title             VARCHAR(255) NOT NULL,
+  summary           TEXT NOT NULL,
+  details           TEXT,
+  update_type       VARCHAR(50) DEFAULT 'feature', -- feature, fix, infra, security, launch
+  status            VARCHAR(50) DEFAULT 'planned', -- planned, released, cancelled
+  target_date       DATE,
+  released_at       TIMESTAMPTZ,
+  created_by        VARCHAR(255),
+  created_at        TIMESTAMPTZ DEFAULT NOW(),
+  updated_at        TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX idx_website_updates_website_key ON website_updates(website_key);
+CREATE INDEX idx_website_updates_status ON website_updates(status);
+CREATE INDEX idx_website_updates_target_date ON website_updates(target_date);
+CREATE INDEX idx_website_updates_released_at ON website_updates(released_at);
+
+CREATE TABLE IF NOT EXISTS update_publish_logs (
+  id                UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  channel           VARCHAR(50) NOT NULL, -- telegram, discord, twitter, webhook
+  post_type         VARCHAR(50) DEFAULT 'daily-digest',
+  message_body      TEXT,
+  payload           JSONB,
+  status            VARCHAR(50) DEFAULT 'success', -- success, failed
+  error_message     TEXT,
+  published_at      TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Default portfolio sites
+INSERT INTO website_registry (website_key, website_name, primary_domain, subdomains, category, description)
+VALUES
+  ('kimiaxe', 'KimiAxe Main Platform', 'kimiaxe.com', ARRAY['app.kimiaxe.com', 'api.kimiaxe.com', 'status.kimiaxe.com'], 'core', 'Main ecosystem and unified dashboard'),
+  ('axesms', 'AxeSMS', 'axesms.org', ARRAY['api.axesms.org', 'docs.axesms.org'], 'communication', 'Bulk SMS, email and WhatsApp operations'),
+  ('axexvx', 'AxeXVX', 'axexvx.link', ARRAY['cdn.axexvx.link', 'qr.axexvx.link'], 'links', 'Link shortener, APK hosting and analytics'),
+  ('axeb2bai', 'AxeB2B AI', 'axeb2b.ai', ARRAY['studio.axeb2b.ai', 'bot.axeb2b.ai'], 'ai', 'AI agents and marketing automation'),
+  ('axeb2bwallet', 'AxeB2B Wallet', 'axeb2b.wallet', ARRAY['pay.axeb2b.wallet', 'kyc.axeb2b.wallet'], 'fintech', 'Wallet, domain commerce and eSIM services'),
+  ('axesocials', 'AxeSocials', 'axesocials.com', ARRAY['dashboard.axesocials.com', 'api.axesocials.com'], 'social', 'Social media publishing and analytics')
+ON CONFLICT (website_key) DO NOTHING;
+
+-- ============================================
 -- TRIGGERS — auto-update updated_at
 -- ============================================
 
@@ -312,6 +371,8 @@ CREATE TRIGGER update_wallets_updated_at BEFORE UPDATE ON wallets FOR EACH ROW E
 CREATE TRIGGER update_short_links_updated_at BEFORE UPDATE ON short_links FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 CREATE TRIGGER update_ai_chatbots_updated_at BEFORE UPDATE ON ai_chatbots FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 CREATE TRIGGER update_chatbot_conversations_updated_at BEFORE UPDATE ON chatbot_conversations FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+CREATE TRIGGER update_website_registry_updated_at BEFORE UPDATE ON website_registry FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+CREATE TRIGGER update_website_updates_updated_at BEFORE UPDATE ON website_updates FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
 -- ============================================
 -- SEED DATA (optional)

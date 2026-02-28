@@ -97,6 +97,28 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;border-bottom:1px solid var(
 .fs-label{font-size:0.8rem;font-weight:600;text-align:center}
 .fs-sub{font-size:0.7rem;color:var(--muted);text-align:center;line-height:1.5}
 
+/* ---- PORTFOLIO ARCHITECTURE ---- */
+.portfolio-architecture{border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--bg2)}
+.arch-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.arch-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:24px;min-height:220px}
+.arch-main{grid-column:span 3;background:linear-gradient(180deg,var(--bg3),var(--bg2))}
+.arch-title{font-family:'Geist Mono',monospace;font-size:0.7rem;letter-spacing:1px;text-transform:uppercase;color:var(--muted2);margin-bottom:6px}
+.arch-domain{font-size:1.1rem;font-weight:700;margin-bottom:14px}
+.arch-card ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.arch-card li{font-size:0.82rem;color:var(--muted2);padding:10px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg2)}
+
+/* ---- UPDATES HUB ---- */
+.updates-hub{background:var(--bg);border-bottom:1px solid var(--border)}
+.updates-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:16px}
+.updates-panel{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:24px}
+.updates-panel h3{font-size:0.9rem;margin-bottom:14px}
+.digest-box{white-space:pre-wrap;background:var(--bg);border:1px solid var(--border2);border-radius:8px;padding:14px;font-family:'Geist Mono',monospace;font-size:0.74rem;color:var(--muted2);min-height:300px;line-height:1.8}
+.registry-list{display:grid;gap:10px}
+.registry-item{border:1px solid var(--border2);border-radius:8px;padding:12px;background:var(--bg)}
+.registry-item .name{font-size:0.84rem;font-weight:600}
+.registry-item .domain{font-family:'Geist Mono',monospace;font-size:0.72rem;color:var(--muted)}
+.registry-item .subs{font-size:0.75rem;color:var(--muted2);margin-top:8px;line-height:1.6}
+
 /* ---- TESTIMONIALS ---- */
 .testimonials{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:80px 24px}
 .testimonials-inner{max-width:1200px;margin:0 auto}
@@ -190,6 +212,9 @@ footer{border-top:1px solid var(--border);padding:48px 24px}
   .stats-inner{grid-template-columns:repeat(2,1fr)}
   .flow-steps{grid-template-columns:1fr;gap:24px}
   .flow-steps::before{display:none}
+  .arch-grid{grid-template-columns:1fr}
+  .arch-main{grid-column:span 1}
+  .updates-grid{grid-template-columns:1fr}
   .testimonials-grid{grid-template-columns:1fr}
   .footer-top{grid-template-columns:1fr 1fr}
   .nav-links .nav-hide{display:none}

@@ -10,14 +10,15 @@
 </head>
 <body>
 
-<div class="announce">🚀 All platforms now live — <a href="#platforms">Explore the ecosystem →</a></div>
+<div class="announce">🚀 Cloudflare-ready multi-domain ecosystem live — <a href="#portfolio-architecture">View domain architecture →</a></div>
 
 <nav>
   <div class="nav-inner">
     <a href="index.html" class="logo">kimi<span>axe</span></a>
     <div class="nav-links">
       <a href="#platforms" class="nav-hide">Platforms</a>
-      <a href="#features" class="nav-hide">Features</a>
+      <a href="#portfolio-architecture" class="nav-hide">Domains</a>
+      <a href="#updates-hub" class="nav-hide">Updates</a>
       <a href="#" onclick="openModal('terms')" class="nav-hide">Docs</a>
       <a href="#" class="btn-outline" style="padding:6px 14px;font-size:0.8rem">Login</a>
       <a href="#" class="btn-white" style="padding:6px 14px;font-size:0.8rem">Get Started</a>
@@ -27,21 +28,21 @@
 
 <section class="hero">
   <div class="hero-grid"></div>
-  <div class="hero-badge"><span class="badge-dot"></span> 6 Platforms. One Ecosystem.</div>
-  <h1>The Complete<br><em>Business OS</em><br>for Modern Teams</h1>
-  <p class="hero-sub">SMS, Email, WhatsApp, AI Chatbots, Link Shortening, eSIM, Domain Selling, Social Media — all under one roof.</p>
+  <div class="hero-badge"><span class="badge-dot"></span> Enterprise Stack. Multi-Domain. Auto Updates.</div>
+  <h1>KimiAxe Multi-Site<br><em>Digital Empire</em><br>on Cloudflare</h1>
+  <p class="hero-sub">Main control on kimiaxe.com with separate brand domains, scalable subdomains, and automated daily social + Telegram update posting.</p>
   <div class="hero-actions">
-    <a href="#platforms" class="btn-white">Explore Platforms</a>
-    <a href="#" class="btn-outline">View Docs</a>
+    <a href="#portfolio-architecture" class="btn-white">Explore Domain Structure</a>
+    <a href="#updates-hub" class="btn-outline">Live Update Center</a>
   </div>
 </section>
 
 <div class="stats-bar">
   <div class="stats-inner">
-    <div class="stat-item"><div class="stat-num">6</div><div class="stat-label">Platforms</div></div>
-    <div class="stat-item"><div class="stat-num">50M+</div><div class="stat-label">Messages Sent</div></div>
-    <div class="stat-item"><div class="stat-num">10K+</div><div class="stat-label">Active Users</div></div>
-    <div class="stat-item"><div class="stat-num">99.9%</div><div class="stat-label">Uptime SLA</div></div>
+    <div class="stat-item"><div class="stat-num">6</div><div class="stat-label">Core Websites</div></div>
+    <div class="stat-item"><div class="stat-num">18+</div><div class="stat-label">Subdomains Planned</div></div>
+    <div class="stat-item"><div class="stat-num">Daily</div><div class="stat-label">Auto Update Digest</div></div>
+    <div class="stat-item"><div class="stat-num">24/7</div><div class="stat-label">Bot Monitoring</div></div>
   </div>
 </div>
 
@@ -91,6 +92,66 @@
         <div class="card-name">One Account</div>
         <div class="card-desc">Single login across all 6 platforms. One wallet, one dashboard, one team.</div>
         <div class="card-tags"><span class="tag">SSO</span><span class="tag">Dashboard</span><span class="tag">Billing</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="portfolio-architecture" class="portfolio-architecture">
+  <div class="section">
+    <div class="section-label">Domain & Subdomain Blueprint</div>
+    <div class="section-title">Main domain + large <em>independent website structure</em></div>
+    <div class="arch-grid">
+      <div class="arch-card arch-main">
+        <div class="arch-title">Main Hub</div>
+        <div class="arch-domain">kimiaxe.com</div>
+        <ul>
+          <li>app.kimiaxe.com — unified customer dashboard</li>
+          <li>api.kimiaxe.com — shared platform APIs</li>
+          <li>status.kimiaxe.com — uptime and incident feed</li>
+        </ul>
+      </div>
+      <div class="arch-card">
+        <div class="arch-title">AxeSMS</div>
+        <div class="arch-domain">axesms.org</div>
+        <ul><li>api.axesms.org</li><li>docs.axesms.org</li><li>panel.axesms.org</li></ul>
+      </div>
+      <div class="arch-card">
+        <div class="arch-title">AxeXVX</div>
+        <div class="arch-domain">axexvx.link</div>
+        <ul><li>cdn.axexvx.link</li><li>qr.axexvx.link</li><li>stats.axexvx.link</li></ul>
+      </div>
+      <div class="arch-card">
+        <div class="arch-title">AxeB2B AI</div>
+        <div class="arch-domain">axeb2b.ai</div>
+        <ul><li>studio.axeb2b.ai</li><li>bot.axeb2b.ai</li><li>labs.axeb2b.ai</li></ul>
+      </div>
+      <div class="arch-card">
+        <div class="arch-title">AxeB2B Wallet</div>
+        <div class="arch-domain">axeb2b.wallet</div>
+        <ul><li>pay.axeb2b.wallet</li><li>kyc.axeb2b.wallet</li><li>market.axeb2b.wallet</li></ul>
+      </div>
+      <div class="arch-card">
+        <div class="arch-title">AxeSocials</div>
+        <div class="arch-domain">axesocials.com</div>
+        <ul><li>dashboard.axesocials.com</li><li>api.axesocials.com</li><li>agency.axesocials.com</li></ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="updates-hub" class="updates-hub">
+  <div class="section">
+    <div class="section-label">Update Operations Center</div>
+    <div class="section-title">What shipped today & what is <em>coming next</em></div>
+    <div class="updates-grid">
+      <div class="updates-panel">
+        <h3>Daily Digest (Auto from API)</h3>
+        <pre id="daily-digest" class="digest-box">Loading daily digest...</pre>
+      </div>
+      <div class="updates-panel">
+        <h3>Registered Websites</h3>
+        <div id="site-registry" class="registry-list">Loading website registry...</div>
       </div>
     </div>
   </div>

@@ -83,3 +83,49 @@ const statObserver = new IntersectionObserver(entries => {
 }, { threshold: 0.5 });
 
 document.querySelectorAll('.stat-num').forEach(el => statObserver.observe(el));
+
+// ---- LIVE UPDATE CENTER ----
+async function loadUpdateCenter() {
+  const digestEl = document.getElementById('daily-digest');
+  const registryEl = document.getElementById('site-registry');
+  if (!digestEl && !registryEl) return;
+
+  try {
+    const [digestRes, sitesRes] = await Promise.all([
+      fetch('/api/updates/digest'),
+      fetch('/api/updates/sites'),
+    ]);
+
+    const digestData = digestRes.ok ? await digestRes.json() : null;
+    const sitesData = sitesRes.ok ? await sitesRes.json() : null;
+
+    if (digestEl) {
+      digestEl.textContent = digestData?.message || 'Digest not available right now.';
+    }
+
+    if (registryEl) {
+      const sites = sitesData?.sites || [];
+      if (!sites.length) {
+        registryEl.textContent = 'No registered websites found.';
+      } else {
+        registryEl.innerHTML = sites
+          .map((s) => {
+            const subdomains = Array.isArray(s.subdomains) ? s.subdomains.join(', ') : '';
+            return `
+              <div class="registry-item">
+                <div class="name">${s.website_name}</div>
+                <div class="domain">${s.primary_domain}</div>
+                <div class="subs">Subdomains: ${subdomains || '—'}</div>
+              </div>
+            `;
+          })
+          .join('');
+      }
+    }
+  } catch (err) {
+    if (digestEl) digestEl.textContent = 'Unable to load digest right now.';
+    if (registryEl) registryEl.textContent = 'Unable to load site registry right now.';
+  }
+}
+
+loadUpdateCenter();

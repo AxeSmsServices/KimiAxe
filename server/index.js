@@ -11,6 +11,9 @@ const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const path = require('path');
 const db = require('./db');
+const updateRoutes = require('./routes/updates');
+const { startDailyDigestScheduler } = require('./jobs/dailyDigestJob');
+const { initTelegramBot } = require('./tgBot');
 
 // ---- PLATFORM ROUTES ----
 const axeSMSRoutes = require('./routes/axesms');
@@ -56,6 +59,7 @@ app.use('/api/socials', axeSocialsRoutes);
 app.use('/api/links', axeXVXRoutes);
 app.use('/api/ai', axeB2BAIRoutes);
 app.use('/api/wallet', axeB2BWalletRoutes);
+app.use('/api/updates', updateRoutes);
 
 // ---- AUTH ROUTES ----
 app.post('/api/auth/register', async (req, res) => {
@@ -297,6 +301,10 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
   console.log(`🚀 KimiAxe server running on http://localhost:${PORT}`);
   console.log(`📊 Environment: ${process.env.NODE_ENV || 'development'}`);
+
+  // Start background automations
+  startDailyDigestScheduler();
+  initTelegramBot();
 });
 
 module.exports = app;
