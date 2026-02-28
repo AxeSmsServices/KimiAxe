@@ -129,3 +129,96 @@ async function loadUpdateCenter() {
 }
 
 loadUpdateCenter();
+
+// ---- AUTH (SIGNUP / LOGIN) ----
+async function apiAuthRegister(payload) {
+  const res = await fetch('/api/auth/register', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
+  const data = await res.json().catch(() => ({}));
+  return { ok: res.ok, status: res.status, data };
+}
+
+async function apiAuthLogin(payload) {
+  const res = await fetch('/api/auth/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
+  const data = await res.json().catch(() => ({}));
+  return { ok: res.ok, status: res.status, data };
+}
+
+(function initAuthForm() {
+  const form = document.getElementById('auth-form');
+  if (!form) return;
+
+  const nameEl = document.getElementById('auth-name');
+  const emailEl = document.getElementById('auth-email');
+  const phoneEl = document.getElementById('auth-phone');
+  const passEl = document.getElementById('auth-password');
+  const msgEl = document.getElementById('auth-message');
+  const submitBtn = document.getElementById('auth-submit');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const name = (nameEl?.value || '').trim();
+    const email = (emailEl?.value || '').trim();
+    const phone = (phoneEl?.value || '').trim();
+    const password = (passEl?.value || '').trim();
+
+    if (!email || !password) {
+      if (msgEl) msgEl.textContent = 'Email and password are required.';
+      return;
+    }
+
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Please wait...';
+    }
+    if (msgEl) msgEl.textContent = 'Creating account...';
+
+    try {
+      // Try register first
+      const register = await apiAuthRegister({
+        name: name || 'User',
+        email,
+        password,
+        phone: phone || null,
+      });
+
+      if (register.ok || register.status === 409) {
+        // If account exists or just created, login immediately
+        const login = await apiAuthLogin({ email, password });
+        if (login.ok && login.data?.token) {
+          localStorage.setItem('kimiaxe_token', login.data.token);
+          localStorage.setItem('kimiaxe_user', JSON.stringify(login.data.user || {}));
+          if (msgEl) msgEl.textContent = 'Success! You are logged in.';
+          setTimeout(() => {
+            closeModal('auth');
+          }, 500);
+          return;
+        }
+
+        if (msgEl) {
+          msgEl.textContent = login.data?.error || 'Login failed. Please verify your password.';
+        }
+        return;
+      }
+
+      if (msgEl) {
+        msgEl.textContent = register.data?.error || 'Sign up failed. Please try again.';
+      }
+    } catch (_err) {
+      if (msgEl) msgEl.textContent = 'Network/server error. Please try again.';
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Continue';
+      }
+    }
+  });
+})();
